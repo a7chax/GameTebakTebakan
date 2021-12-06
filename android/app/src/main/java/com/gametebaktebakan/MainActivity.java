@@ -1,5 +1,5 @@
 package com.gametebaktebakan;
-
+import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -11,5 +11,11 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "GameTebakTebakan";
+  }
+
+
+  @Override
+  protected void onCreate(Bundle savedInstance){
+    super.onCreate(null);
   }
 }
