@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "580699698644",
+    "project_id": "game-tebak-tebakan-a012d",
+    "storage_bucket": "game-tebak-tebakan-a012d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580699698644:android:1cbe63379e2327dbb85241",
+        "android_client_info": {
+          "package_name": "com.gametebaktebakan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580699698644-0utvin9g371he6aghkf0u97m2v5jlo2r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gametebaktebakan",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "580699698644-h92a3d6um97msu349u2er2aelit7k8sq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmm6LQlc137-aSKeGFJHtyxc1egKa-9nY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580699698644-h92a3d6um97msu349u2er2aelit7k8sq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
