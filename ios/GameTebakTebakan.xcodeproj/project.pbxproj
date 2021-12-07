@@ -13,6 +13,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		38F19E3F08DB4C202CA32131 /* libPods-GameTebakTebakan-GameTebakTebakanTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 456CE10FE2170F9143FE9B80 /* libPods-GameTebakTebakan-GameTebakTebakanTests.a */; };
 		630B16AC275E8AFB00DA937F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 630B16AB275E8AFB00DA937F /* GoogleService-Info.plist */; };
+		6397AC2F275ED66100A95FC9 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 6397AC2E275ED66100A95FC9 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C7E06B38B8783C514F17D839 /* libPods-GameTebakTebakan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A89328E1F9D6F48E7B8621 /* libPods-GameTebakTebakan.a */; };
 /* End PBXBuildFile section */
@@ -62,6 +63,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7E06B38B8783C514F17D839 /* libPods-GameTebakTebakan.a in Frameworks */,
+				6397AC2F275ED66100A95FC9 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +196,9 @@
 			dependencies = (
 			);
 			name = GameTebakTebakan;
+			packageProductDependencies = (
+				6397AC2E275ED66100A95FC9 /* FirebaseAnalyticsWithoutAdIdSupport */,
+			);
 			productName = GameTebakTebakan;
 			productReference = 13B07F961A680F5B00A75B9A /* GameTebakTebakan.app */;
 			productType = "com.apple.product-type.application";
@@ -224,6 +229,9 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
+			packageReferences = (
+				6397AC2D275ED66100A95FC9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -701,6 +709,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6397AC2D275ED66100A95FC9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6397AC2E275ED66100A95FC9 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6397AC2D275ED66100A95FC9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }
