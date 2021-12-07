@@ -17,6 +17,10 @@ const Home = props => {
     navigation.navigate('Profile');
   };
 
+  const navigateToQuestion = () => {
+    navigation.navigate('Question');
+  };
+
   const analytic = async () => {
     analytics().logEvent('basket', {
       id: 3745092,
@@ -25,7 +29,7 @@ const Home = props => {
   };
 
   const Item = ({title}) => (
-    <TouchableOpacity style={styles.item}>
+    <TouchableOpacity style={styles.item} onPress={navigateToQuestion}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.jumlahsoal}>Jumlah Soal : 10</Text>
     </TouchableOpacity>
