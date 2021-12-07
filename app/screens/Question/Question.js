@@ -63,6 +63,7 @@ var MATEMATIKA = [
 ];
 
 const Question = props => {
+  const {navigation} = props;
   const [pageNumber, setPageNumber] = useState(1);
   const [dataQuestion, setDataQuestion] = useState(MATEMATIKA);
 
@@ -82,7 +83,7 @@ const Question = props => {
           height: 70,
           alignItems: 'center',
         }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon
             style={{margin: 16}}
             name="arrow-back-outline"
