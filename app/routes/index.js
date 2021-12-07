@@ -6,11 +6,19 @@ import UserRoute from './UserRoute';
 
 const Stack = createStackNavigator();
 
+const basicOptions = () => ({
+  headerShown: false,
+});
+
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="User" headerMode>
-        <Stack.Screen name="User" component={UserRoute} />
+      <Stack.Navigator initialRouteName="User">
+        <Stack.Screen
+          name="User"
+          component={UserRoute}
+          options={basicOptions()}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

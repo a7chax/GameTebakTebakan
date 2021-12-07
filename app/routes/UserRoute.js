@@ -6,7 +6,7 @@ const Stack = createStackNavigator();
 
 const UserRoute = () => {
   return (
-    <Stack.Navigator intialRouteName="Home" headerMode>
+    <Stack.Navigator intialRouteName="Home">
       <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );
