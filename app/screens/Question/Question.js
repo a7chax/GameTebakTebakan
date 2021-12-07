@@ -75,7 +75,7 @@ const Question = props => {
     setPageNumber(pageNumberTemp);
   };
   return (
-    <View style={{flex: 1, backgroundColor: '#F3F6FA'}}>
+    <View style={{flex: 1, backgroundColor: '#FFF'}}>
       <View
         style={{
           flexDirection: 'row',
@@ -94,7 +94,7 @@ const Question = props => {
         <Text
           style={{
             fontSize: 16,
-            color: '#0A1931',
+            color: BASIC_BLACK,
             fontWeight: '500',
           }}>
           Matematika Pemula
@@ -141,7 +141,7 @@ const Question = props => {
               <Text
                 style={{
                   fontSize: 24,
-                  color: '#0A1931',
+                  color: BASIC_BLACK,
                   fontWeight: 'bold',
                 }}>
                 {item.question}
