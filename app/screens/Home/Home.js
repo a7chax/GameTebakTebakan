@@ -8,24 +8,29 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import {useSelector} from 'react-redux';
+
 import analytics from '@react-native-firebase/analytics';
 
 const Home = props => {
   const {navigation} = props;
 
+  const {playerName} = useSelector(state => state.Game);
+
+  const analytic = async () => {
+    await analytics().logEvent('basket', {
+      id: 3745092,
+      item: 'mens grey t-shirt',
+    });
+  };
+
   const navigateToProfile = () => {
     navigation.navigate('Profile');
+    // analytic();
   };
 
   const navigateToQuestion = () => {
     navigation.navigate('Question');
-  };
-
-  const analytic = async () => {
-    analytics().logEvent('basket', {
-      id: 3745092,
-      item: 'mens grey t-shirt',
-    });
   };
 
   const Item = ({title}) => (
@@ -44,7 +49,7 @@ const Home = props => {
         <Text style={styles.nilai}>10000</Text>
         <View style={styles.horizontalLine} />
         <TouchableOpacity onPress={navigateToProfile}>
-          <Text style={styles.nama}>Arungi Cahaya</Text>
+          <Text style={styles.nama}>{playerName}</Text>
         </TouchableOpacity>
       </View>
 

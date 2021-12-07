@@ -11,13 +11,13 @@ const basicOptions = () => ({
 
 const UserRoute = () => {
   return (
-    <Stack.Navigator intialRouteName="Question">
-      <Stack.Screen name="Home" component={Home} options={basicOptions()} />
+    <Stack.Navigator intialRouteName="Profile">
       <Stack.Screen
         name="Profile"
         component={Profile}
         options={basicOptions()}
       />
+      <Stack.Screen name="Home" component={Home} options={basicOptions()} />
       <Stack.Screen
         name="Question"
         component={Question}
