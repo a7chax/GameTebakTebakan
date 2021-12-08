@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, FlatList, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {analyticsEvent} from '../../utils';
 
 const width = Dimensions.get('window').width;
 const BASIC_COLOR = '#5568FE';
@@ -67,6 +68,15 @@ const Question = props => {
   const [pageNumber, setPageNumber] = useState(1);
   const [dataQuestion, setDataQuestion] = useState(MATEMATIKA);
 
+  const navigateToHome = () => {
+    analyticsEvent('back_to_home', {question_type: 'Matematika'});
+    navigation.goBack();
+  };
+
+  const onPressFAQ = () => {
+    analyticsEvent('onPress_FAQ_Question');
+  };
+
   const onScrollEnd = e => {
     let pageNumberTemp = Math.min(
       Math.max(Math.floor(e.nativeEvent.contentOffset.x / width + 0.7) + 1, 0),
@@ -83,7 +93,7 @@ const Question = props => {
           height: 70,
           alignItems: 'center',
         }}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigateToHome()}>
           <Icon
             style={{margin: 16}}
             name="arrow-back-outline"
@@ -99,7 +109,7 @@ const Question = props => {
           }}>
           Matematika Pemula
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPressFAQ}>
           <Icon
             style={{marginHorizontal: 16, marginVertical: 8}}
             name="help-circle-outline"

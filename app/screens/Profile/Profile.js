@@ -20,6 +20,7 @@ const Profile = props => {
     dispatch(PlayerName(name));
     navigation.navigate('Home');
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Masukkan Nama Anda</Text>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -10,31 +10,33 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 
-import analytics from '@react-native-firebase/analytics';
+// import analytics from '@react-native-firebase/analytics';
+import {
+  analyticsEvent,
+  analyticsScreen,
+  analyticsUserProperties,
+} from '../../utils';
 
 const Home = props => {
   const {navigation} = props;
 
   const {playerName} = useSelector(state => state.Game);
 
-  const analytic = async () => {
-    await analytics().logEvent('basket', {
-      id: 3745092,
-      item: 'mens grey t-shirt',
-    });
-  };
-
   const navigateToProfile = () => {
     navigation.navigate('Profile');
-    // analytic();
+    analyticsScreen('Profile');
   };
 
-  const navigateToQuestion = () => {
+  const navigateToQuestion = (typeQuestion = '') => {
     navigation.navigate('Question');
+    analyticsScreen('Question');
+    analyticsEvent('go_to_question', {typeQuestion: typeQuestion});
   };
 
   const Item = ({title}) => (
-    <TouchableOpacity style={styles.item} onPress={navigateToQuestion}>
+    <TouchableOpacity
+      style={styles.item}
+      onPress={() => navigateToQuestion(title)}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.jumlahsoal}>Jumlah Soal : 10</Text>
     </TouchableOpacity>
@@ -42,6 +44,12 @@ const Home = props => {
 
   const renderItem = ({item}) => <Item title={item} />;
 
+  useEffect(() => {
+    analyticsUserProperties({
+      highest_score_question_type: 'Matematika',
+      lowest_score_question_type: 'Kimia',
+    });
+  }, []);
   return (
     <ScrollView style={styles.background}>
       <View style={styles.scorebox}>

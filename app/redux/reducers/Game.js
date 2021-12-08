@@ -5,6 +5,7 @@ const initialState = {
   englishScore: 0,
   artCultureScore: 0,
   playerName: '',
+  isNameChanged: false,
 };
 
 const Game = (state = initialState, action = {}) => {
@@ -14,6 +15,7 @@ const Game = (state = initialState, action = {}) => {
       return {
         ...state,
         playerName: payload,
+        isNameChanged: true,
       };
     case 'TOTAL_SCORE':
       return {
