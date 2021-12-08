@@ -16,12 +16,12 @@ const BASIC_COLOR = '#5568FE';
 const BASIC_TRANSPARENT_COLOR = 'rgba(85, 105, 254, 0.1)';
 const BASIC_BLACK = '#0A1931';
 
-const ButtonAnswer = ({i, e, onPress}) => {
+const ButtonAnswer = ({item, index, onPress}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={{
-        backgroundColor: i !== 0 ? BASIC_TRANSPARENT_COLOR : BASIC_COLOR,
+        backgroundColor: item.selected ? BASIC_COLOR : BASIC_TRANSPARENT_COLOR,
         width: '100%',
         padding: 16,
         marginBottom: 12,
@@ -30,10 +30,10 @@ const ButtonAnswer = ({i, e, onPress}) => {
       <Text
         style={{
           fontSize: 20,
-          color: i !== 0 ? BASIC_BLACK : 'white',
+          color: item.selected ? 'white' : BASIC_BLACK,
           fontWeight: '600',
         }}>
-        {e.option}. {e.valueOption}
+        {item.option}. {item.valueOption}
       </Text>
     </TouchableOpacity>
   );
@@ -147,10 +147,26 @@ const Question = props => {
               </Text>
 
               <View style={{marginTop: 20}}>
-                {item.options.map((e, i) => {
+                {item?.options?.map((itemItem, indexIndex) => {
                   return (
                     <>
-                      <ButtonAnswer e={e} i={i} />
+                      <ButtonAnswer
+                        item={itemItem}
+                        index={indexIndex}
+                        onPress={() => {
+                          const tempDataQuesttion = dataQuestion;
+                          dataQuestion[index].options.map(
+                            (itemLoop, indexLoop) => {
+                              if (indexIndex === indexLoop) {
+                                return (itemLoop.selected = true);
+                              } else {
+                                return (itemLoop.selected = false);
+                              }
+                            },
+                          );
+                          setDataQuestion([...tempDataQuesttion]);
+                        }}
+                      />
                       {/* <TouchableOpacity
                       style={{
                         backgroundColor:
