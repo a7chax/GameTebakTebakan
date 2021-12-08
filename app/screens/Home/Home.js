@@ -7,15 +7,34 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/Ionicons';
 // import analytics from '@react-native-firebase/analytics';
 import {
   analyticsEvent,
   analyticsScreen,
   analyticsUserProperties,
 } from '../../utils';
+
+const BASIC_COLOR = '#5568FE';
+const BASIC_TRANSPARENT_COLOR = 'rgba(85, 105, 254, 0.1)';
+const BASIC_BLACK = '#0A1931';
+
+const COLORS = [
+  '#CCE8FF',
+  '#FFECDA',
+  '#FEE0AE',
+  '#E4D7FF',
+  '#E6FFF0',
+  '#FFF4FC',
+  '#F1FFEE',
+  '#FEDDF1',
+  '#CCE8FF',
+  '#E7FDE7',
+];
 
 const Home = props => {
   const {navigation} = props;
@@ -35,10 +54,30 @@ const Home = props => {
 
   const Item = ({title}) => (
     <TouchableOpacity
-      style={styles.item}
+      style={{
+        backgroundColor: COLORS[Math.floor(Math.random() * 10 + 1)],
+        borderRadius: 8,
+        marginBottom: 10,
+        padding: 16,
+      }}
       onPress={() => navigateToQuestion(title)}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.jumlahsoal}>Jumlah Soal : 10</Text>
+      <Text
+        style={{
+          color: 'grey',
+          fontSize: 14,
+          fontFamily: 'ReadexPro-Regular',
+        }}>
+        Jumlah Soal : 10
+      </Text>
+      <Text
+        style={{
+          color: BASIC_BLACK,
+          fontSize: 28,
+          lineHeight: 34,
+          fontFamily: 'ReadexPro-SemiBold',
+        }}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 
@@ -52,21 +91,83 @@ const Home = props => {
   }, []);
   return (
     <ScrollView style={styles.background}>
-      <View style={styles.scorebox}>
-        <Text style={styles.totalnilai}>Total Nilai</Text>
-        <Text style={styles.nilai}>10000</Text>
-        <View style={styles.horizontalLine} />
-        <TouchableOpacity onPress={navigateToProfile}>
-          <Text style={styles.nama}>{playerName}</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.minibox}>
-        <Text style={styles.textMinibox}>FAQ</Text>
-      </View>
+      <Text
+        style={{
+          color: BASIC_COLOR,
+          fontSize: 38,
+          fontFamily: 'ReadexPro-Bold',
+        }}>
+        Let's Play
+      </Text>
+      <Text
+        style={{
+          color: 'grey',
+          fontSize: 14,
+          fontFamily: 'ReadexPro-Regular',
+          marginTop: -10,
+        }}>
+        Be the first rank!
+      </Text>
+      <LinearGradient
+        colors={['#5670F3', '#0BBDFF']}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        style={{
+          padding: 16,
+          borderRadius: 16,
+          height: 200,
+          justifyContent: 'flex-end',
+          zIndex: 0,
+          marginTop: 16,
+        }}>
+        <Text style={{color: '#fff', fontFamily: 'ReadexPro-Regular'}}>
+          Score: 1999
+        </Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text
+            style={{
+              color: '#fff',
+              fontFamily: 'ReadexPro-SemiBold',
+              fontSize: 38,
+              lineHeight: 44,
+            }}>
+            AnandaJago
+          </Text>
+          <TouchableOpacity
+            style={{zIndex: 5, padding: 8}}
+            onPress={navigateToProfile}>
+            <Icon
+              style={{marginLeft: 4}}
+              name="pencil"
+              size={28}
+              color="#FFF"
+            />
+          </TouchableOpacity>
+        </View>
+        <Image
+          source={require('../../assets/images/Saly.png')}
+          style={{
+            height: 200,
+            width: 170,
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            zIndex: 1,
+          }}
+        />
+      </LinearGradient>
 
       <View>
-        <Text style={styles.kategori}>Kategori :</Text>
+        <Text
+          style={{
+            color: BASIC_BLACK,
+            fontSize: 28,
+            fontFamily: 'ReadexPro-SemiBold',
+            marginTop: 16,
+            marginBottom: 8,
+          }}>
+          Kategori :
+        </Text>
         <FlatList
           data={['Matematika', 'Seni Budaya', 'Kimia', 'IPA']}
           renderItem={renderItem}
