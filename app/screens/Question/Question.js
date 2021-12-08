@@ -16,6 +16,29 @@ const BASIC_COLOR = '#5568FE';
 const BASIC_TRANSPARENT_COLOR = 'rgba(85, 105, 254, 0.1)';
 const BASIC_BLACK = '#0A1931';
 
+const ButtonAnswer = ({i, e, onPress}) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        backgroundColor: i !== 0 ? BASIC_TRANSPARENT_COLOR : BASIC_COLOR,
+        width: '100%',
+        padding: 16,
+        marginBottom: 12,
+        borderRadius: 8,
+      }}>
+      <Text
+        style={{
+          fontSize: 20,
+          color: i !== 0 ? BASIC_BLACK : 'white',
+          fontWeight: '600',
+        }}>
+        {e.option}. {e.valueOption}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
 const Question = props => {
   const {navigation, route} = props;
 
@@ -23,6 +46,7 @@ const Question = props => {
 
   const [pageNumber, setPageNumber] = useState(1);
   const [dataQuestion, setDataQuestion] = useState(Questions(questionType));
+  const [selectedAnswer, setSelectedAnswer] = useState('');
 
   const navigateToHome = () => {
     analyticsEvent('back_to_home', {questionType: questionType});
@@ -40,6 +64,15 @@ const Question = props => {
     );
     setPageNumber(pageNumberTemp);
   };
+
+  const nextQuestion = item => {
+    const {id: number, isRight} = item;
+    analyticsEvent(`${questionType.toLowerCase()}_answer`, {
+      number: number,
+      isRight: isRight,
+    });
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: '#FFF'}}>
       <View
@@ -116,7 +149,9 @@ const Question = props => {
               <View style={{marginTop: 20}}>
                 {item.options.map((e, i) => {
                   return (
-                    <TouchableOpacity
+                    <>
+                      <ButtonAnswer e={e} i={i} />
+                      {/* <TouchableOpacity
                       style={{
                         backgroundColor:
                           i !== 0 ? BASIC_TRANSPARENT_COLOR : BASIC_COLOR,
@@ -133,7 +168,8 @@ const Question = props => {
                         }}>
                         {e.option}. {e.valueOption}
                       </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+                    </>
                   );
                 })}
               </View>
@@ -141,10 +177,6 @@ const Question = props => {
           );
         }}
       />
-
-      <TouchableOpacity>
-        <Text>asdfasdf</Text>
-      </TouchableOpacity>
     </View>
   );
 };
