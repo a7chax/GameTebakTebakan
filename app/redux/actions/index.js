@@ -16,6 +16,12 @@ export const MathScore = data => {
   };
 };
 
+export const MathQuestion = () => {
+  return {
+    type: 'MATH_QUESTION',
+  };
+};
+
 export const ArtCultureScore = data => {
   return dispatch => {
     return dispatch({type: 'ART_CULTURE_SCORE', payload: data});

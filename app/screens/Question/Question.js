@@ -1,75 +1,31 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, FlatList, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,
+  TouchableOpacityBase,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {analyticsEvent} from '../../utils';
+import {Questions} from '../../constants';
 
 const width = Dimensions.get('window').width;
 const BASIC_COLOR = '#5568FE';
 const BASIC_TRANSPARENT_COLOR = 'rgba(85, 105, 254, 0.1)';
 const BASIC_BLACK = '#0A1931';
 
-var MATEMATIKA = [
-  {
-    id: 1,
-    question: ' -5 + (-8) = ...',
-    options: [
-      {
-        option: 'a',
-        valueOption: '-3',
-        isRight: false,
-      },
-      {
-        option: 'b',
-        valueOption: '-5',
-        isRight: false,
-      },
-      {
-        option: 'a',
-        valueOption: '-8',
-        isRight: false,
-      },
-      {
-        option: 'a',
-        valueOption: '-13',
-        isRight: true,
-      },
-    ],
-  },
-  {
-    id: 2,
-    question: ' -5 + (-8) = ...',
-    options: [
-      {
-        option: 'a',
-        valueOption: '-3',
-        isRight: false,
-      },
-      {
-        option: 'b',
-        valueOption: '-5',
-        isRight: false,
-      },
-      {
-        option: 'a',
-        valueOption: '-8',
-        isRight: false,
-      },
-      {
-        option: 'a',
-        valueOption: '-13',
-        isRight: true,
-      },
-    ],
-  },
-];
-
 const Question = props => {
-  const {navigation} = props;
+  const {navigation, route} = props;
+
+  const questionType = route.params?.questionType ?? '';
+
   const [pageNumber, setPageNumber] = useState(1);
-  const [dataQuestion, setDataQuestion] = useState(MATEMATIKA);
+  const [dataQuestion, setDataQuestion] = useState(Questions(questionType));
 
   const navigateToHome = () => {
-    analyticsEvent('back_to_home', {question_type: 'Matematika'});
+    analyticsEvent('back_to_home', {questionType: 'Matematika'});
     navigation.goBack();
   };
 
@@ -80,7 +36,7 @@ const Question = props => {
   const onScrollEnd = e => {
     let pageNumberTemp = Math.min(
       Math.max(Math.floor(e.nativeEvent.contentOffset.x / width + 0.7) + 1, 0),
-      MATEMATIKA.length,
+      dataQuestion.length,
     );
     setPageNumber(pageNumberTemp);
   };
@@ -107,7 +63,7 @@ const Question = props => {
             color: BASIC_BLACK,
             fontWeight: '500',
           }}>
-          Matematika Pemula
+          {questionType}
         </Text>
         <TouchableOpacity onPress={onPressFAQ}>
           <Icon
@@ -160,7 +116,7 @@ const Question = props => {
               <View style={{marginTop: 20}}>
                 {item.options.map((e, i) => {
                   return (
-                    <View
+                    <TouchableOpacity
                       style={{
                         backgroundColor:
                           i !== 0 ? BASIC_TRANSPARENT_COLOR : BASIC_COLOR,
@@ -177,7 +133,7 @@ const Question = props => {
                         }}>
                         {e.option}. {e.valueOption}
                       </Text>
-                    </View>
+                    </TouchableOpacity>
                   );
                 })}
               </View>
@@ -185,6 +141,10 @@ const Question = props => {
           );
         }}
       />
+
+      <TouchableOpacity>
+        <Text>asdfasdf</Text>
+      </TouchableOpacity>
     </View>
   );
 };
