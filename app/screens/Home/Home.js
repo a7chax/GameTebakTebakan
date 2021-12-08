@@ -12,13 +12,28 @@ import {
 import {useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  uniqueNamesGenerator,
+  adjectives,
+  colors,
+  animals,
+} from 'unique-names-generator';
 import {QuestionCategory} from '../../constants';
+import {useDispatch} from 'react-redux';
+import {PlayerName} from '../../redux/actions';
 // import analytics from '@react-native-firebase/analytics';
 import {
   analyticsEvent,
   analyticsScreen,
   analyticsUserProperties,
 } from '../../utils';
+
+const capitalizedName = uniqueNamesGenerator({
+  dictionaries: [colors, animals],
+  style: 'capital',
+  separator: '',
+  length: 2,
+});
 
 const BASIC_COLOR = '#5568FE';
 const BASIC_TRANSPARENT_COLOR = 'rgba(85, 105, 254, 0.1)';
@@ -39,8 +54,16 @@ const COLORS = [
 
 const Home = props => {
   const {navigation} = props;
-
+  const dispatch = useDispatch();
   const {playerName} = useSelector(state => state.Game);
+
+  useEffect(() => {
+    if (!playerName) {
+      dispatch(PlayerName(capitalizedName));
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const navigateToProfile = () => {
     navigation.navigate('Profile');
@@ -93,7 +116,7 @@ const Home = props => {
     });
   }, []);
   return (
-    <ScrollView style={styles.background}>
+    <View style={[styles.background, {flex: 1}]}>
       <Text
         style={{
           color: BASIC_COLOR,
@@ -133,18 +156,20 @@ const Home = props => {
               fontFamily: 'ReadexPro-SemiBold',
               fontSize: 38,
               lineHeight: 44,
+              zIndex: 5,
             }}>
             {playerName}
           </Text>
           <TouchableOpacity
-            style={{zIndex: 5, padding: 8}}
+            style={{
+              zIndex: 5,
+              padding: 8,
+              backgroundColor: 'rgba(0,0,0,0.1)',
+              borderRadius: 8,
+              marginLeft: 8,
+            }}
             onPress={navigateToProfile}>
-            <Icon
-              style={{marginLeft: 4}}
-              name="pencil"
-              size={28}
-              color="#FFF"
-            />
+            <Icon name="pencil" size={28} color="#FFF" />
           </TouchableOpacity>
         </View>
         <Image
@@ -160,7 +185,7 @@ const Home = props => {
         />
       </LinearGradient>
 
-      <View style={{marginBottom: 16}}>
+      <View>
         <Text
           style={{
             color: BASIC_BLACK,
@@ -171,10 +196,15 @@ const Home = props => {
           }}>
           Kategori :
         </Text>
-        <FlatList data={QuestionCategory} renderItem={renderItem} />
       </View>
+      <FlatList
+        style={{flex: 1}}
+        data={QuestionCategory}
+        renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
+      />
       {/* <Button title="Klik Ini" onPress={analytic} /> */}
-    </ScrollView>
+    </View>
   );
 };
 
