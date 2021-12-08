@@ -160,7 +160,7 @@ const Home = props => {
         />
       </LinearGradient>
 
-      <View>
+      <View style={{marginBottom: 16}}>
         <Text
           style={{
             color: BASIC_BLACK,
