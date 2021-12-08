@@ -1319,36 +1319,36 @@ const BAHASA = [
 
 export const QuestionCategory = [
   {
-    title: 'MATEMATIKA',
+    title: 'Matematika',
     totalQuestion: 10,
   },
   {
-    title: 'BAHASA INGGRIS',
+    title: 'Bahasa Inggris',
     totalQuestion: 10,
   },
   {
-    title: 'BAHASA INDONESIA',
+    title: 'Bahasa Indonesia',
     totalQuestion: 10,
   },
   {
-    title: 'PENJASKES',
+    title: 'Penjaskes',
     totalQuestion: 10,
   },
   {
-    title: 'SENI_BUDAYA',
+    title: 'Seni Budaya',
     totalQuestion: 10,
   },
 ];
 
 export const Questions = param => {
   switch (param) {
-    case 'BAHASA INDONESIA':
+    case 'Bahasa Indonesia':
       return BAHASA;
-    case 'BAHASA INGGRIS':
+    case 'Bahasa Inggris':
       return ENGLISH;
-    case 'PENJASKES':
+    case 'Penjaskes':
       return SPORT;
-    case 'SENI_BUDAYA':
+    case 'Seni Budaya':
       return ART_CULTURE;
     default:
       return MATHEMATIC;

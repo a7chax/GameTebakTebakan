@@ -25,7 +25,7 @@ const Question = props => {
   const [dataQuestion, setDataQuestion] = useState(Questions(questionType));
 
   const navigateToHome = () => {
-    analyticsEvent('back_to_home', {questionType: 'Matematika'});
+    analyticsEvent('back_to_home', {questionType: questionType});
     navigation.goBack();
   };
 

@@ -12,6 +12,7 @@ import {
 import {useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {QuestionCategory} from '../../constants';
 // import analytics from '@react-native-firebase/analytics';
 import {
   analyticsEvent,
@@ -46,13 +47,13 @@ const Home = props => {
     analyticsScreen('Profile');
   };
 
-  const navigateToQuestion = (typeQuestion = '') => {
-    navigation.navigate('Question');
+  const navigateToQuestion = (questionType = '') => {
+    navigation.navigate('Question', {questionType: questionType});
     analyticsScreen('Question');
-    analyticsEvent('go_to_question', {typeQuestion: typeQuestion});
+    analyticsEvent('go_to_question', {typeQuestion: questionType});
   };
 
-  const Item = ({title}) => (
+  const Item = ({title, totalQuestion}) => (
     <TouchableOpacity
       style={{
         backgroundColor: COLORS[Math.floor(Math.random() * 10 + 1) - 1],
@@ -67,7 +68,7 @@ const Home = props => {
           fontSize: 14,
           fontFamily: 'ReadexPro-Regular',
         }}>
-        Jumlah Soal : 10
+        Jumlah Soal : {totalQuestion}
       </Text>
       <Text
         style={{
@@ -81,7 +82,9 @@ const Home = props => {
     </TouchableOpacity>
   );
 
-  const renderItem = ({item}) => <Item title={item} />;
+  const renderItem = ({item}) => (
+    <Item title={item.title} totalQuestion={item.totalQuestion} />
+  );
 
   useEffect(() => {
     analyticsUserProperties({
@@ -131,7 +134,7 @@ const Home = props => {
               fontSize: 38,
               lineHeight: 44,
             }}>
-            AnandaJago
+            {playerName}
           </Text>
           <TouchableOpacity
             style={{zIndex: 5, padding: 8}}
@@ -168,10 +171,7 @@ const Home = props => {
           }}>
           Kategori :
         </Text>
-        <FlatList
-          data={['Matematika', 'Seni Budaya', 'Kimia', 'IPA']}
-          renderItem={renderItem}
-        />
+        <FlatList data={QuestionCategory} renderItem={renderItem} />
       </View>
       {/* <Button title="Klik Ini" onPress={analytic} /> */}
     </ScrollView>
