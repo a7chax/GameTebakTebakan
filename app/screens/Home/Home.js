@@ -55,7 +55,7 @@ const Home = props => {
   const Item = ({title}) => (
     <TouchableOpacity
       style={{
-        backgroundColor: COLORS[Math.floor(Math.random() * 10 + 1)],
+        backgroundColor: COLORS[Math.floor(Math.random() * 10 + 1) - 1],
         borderRadius: 8,
         marginBottom: 10,
         padding: 16,
