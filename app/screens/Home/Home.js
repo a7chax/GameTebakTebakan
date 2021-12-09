@@ -55,7 +55,7 @@ const COLORS = [
 const Home = props => {
   const {navigation} = props;
   const dispatch = useDispatch();
-  const {playerName} = useSelector(state => state.Game);
+  const {playerName, totalScore} = useSelector(state => state.Game);
 
   useEffect(() => {
     if (!playerName) {
@@ -118,8 +118,7 @@ const Home = props => {
 
   useEffect(() => {
     analyticsUserProperties({
-      highest_score_question_type: 'Matematika',
-      lowest_score_question_type: 'Kimia',
+      totalScore: '10000',
     });
   }, []);
   return (
@@ -154,7 +153,7 @@ const Home = props => {
           marginTop: 16,
         }}>
         <Text style={{color: '#fff', fontFamily: 'ReadexPro-Regular'}}>
-          Score: 1999
+          Score: {totalScore}
         </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text

@@ -1,9 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {MathScore, TotalScore} from '../../redux/actions';
+import {analyticsEvent} from '../../utils';
 
 const Finish = props => {
-  const {navigation} = props;
+  const {navigation, route} = props;
   const BASIC_BLACK = '#0A1931';
+
+  const dispatch = useDispatch();
+
+  const analytic = route.params?.analytic ?? '';
+  const score = route.params?.score ?? 0;
+
+  const [selectedRating, setSelectedRating] = useState('senang');
 
   return (
     <ScrollView
@@ -54,7 +64,7 @@ const Finish = props => {
             margin: 32,
             fontFamily: 'ReadexPro-SemiBold',
           }}>
-          NILAI : 80
+          NILAI : {score}
         </Text>
         <View style={{backgroundColor: 'white', padding: 16, borderRadius: 8}}>
           <Text
@@ -75,57 +85,92 @@ const Finish = props => {
             Kami senang mendengar anda, bagaimana pengalaman anda ketika
             mengerjakan soal ini ?
           </Text>
-
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginTop: 16,
-            }}>
-            <Image
-              source={require('../../assets/images/confused-face.png')}
+          <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+            <TouchableOpacity
+              onPress={() => setSelectedRating('tidak_senang')}
               style={{
-                height: 50,
-                width: 50,
-                bottom: 0,
-                right: 0,
-                zIndex: 1,
-                marginHorizontal: 8,
-                alignSelf: 'center',
-              }}
-            />
-            <Image
-              source={require('../../assets/images/neutral-face.png')}
-              style={{
-                height: 50,
-                width: 50,
-                bottom: 0,
-                right: 0,
-                zIndex: 1,
-                marginHorizontal: 8,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 16,
+              }}>
+              <Image
+                source={require('../../assets/images/confused-face.png')}
+                style={{
+                  height: 50,
+                  width: 50,
+                  bottom: 0,
+                  right: 0,
+                  zIndex: 1,
+                  marginHorizontal: 8,
+                  borderWidth: selectedRating === 'tidak_senang' ? 2 : 0,
+                  borderColor: 'black',
+                  borderRadius: 380,
+                  alignSelf: 'center',
+                }}
+              />
+            </TouchableOpacity>
 
-                alignSelf: 'center',
-              }}
-            />
-            <Image
-              source={require('../../assets/images/happy-face-with-enlarged-eyes.png')}
+            <TouchableOpacity
+              onPress={() => setSelectedRating('netral')}
               style={{
-                height: 50,
-                width: 50,
-                bottom: 0,
-                right: 0,
-                zIndex: 1,
-                marginHorizontal: 8,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 16,
+              }}>
+              <Image
+                source={require('../../assets/images/neutral-face.png')}
+                style={{
+                  height: 50,
+                  width: 50,
+                  bottom: 0,
+                  right: 0,
+                  zIndex: 1,
+                  marginHorizontal: 8,
+                  borderWidth: selectedRating === 'netral' ? 2 : 0,
+                  borderColor: 'black',
+                  borderRadius: 380,
+                  alignSelf: 'center',
+                }}
+              />
+            </TouchableOpacity>
 
-                alignSelf: 'center',
-              }}
-            />
+            <TouchableOpacity
+              onPress={() => setSelectedRating('senang')}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 16,
+              }}>
+              <Image
+                source={require('../../assets/images/happy-face-with-enlarged-eyes.png')}
+                style={{
+                  height: 50,
+                  width: 50,
+                  bottom: 0,
+                  right: 0,
+                  zIndex: 1,
+                  marginHorizontal: 8,
+
+                  borderWidth: selectedRating === 'senang' ? 2 : 0,
+                  borderColor: 'black',
+                  borderRadius: 380,
+                  alignSelf: 'center',
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => {
+          dispatch(TotalScore(score));
+          navigation.navigate('Home');
+          analyticsEvent('rating', {
+            questionType: analytic,
+            value: selectedRating,
+          });
+        }}
         style={{
           backgroundColor: '#33f283',
           borderRadius: 8,

@@ -75,12 +75,15 @@ const Question = props => {
   };
 
   const nextQuestion = () => {
+    const questionAnswerTemp = questionAnswer.filter(
+      item => item.isRight === true,
+    );
+
     if (pageNumber !== dataQuestion.length) {
       const {id: number, isRight} = selectedAnswer;
 
       setQuestionAnswer(questionAnswer.concat(selectedAnswer));
 
-      console.log(number, isRight);
       analyticsEvent(`${analytic}_answer`, {
         numberQuestion: number,
         isRight: isRight.toString(),
@@ -94,7 +97,10 @@ const Question = props => {
           delete _item?.selected;
         });
       });
-      navigation.navigate('Finish');
+      navigation.navigate('Finish', {
+        score: questionAnswerTemp.length * 10,
+        analytic: analytic,
+      });
     }
   };
 

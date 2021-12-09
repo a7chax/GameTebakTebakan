@@ -20,7 +20,7 @@ const Game = (state = initialState, action = {}) => {
     case 'TOTAL_SCORE':
       return {
         ...state,
-        totalScore: payload,
+        totalScore: state.totalScore + payload,
       };
     case 'MATH_SCORE':
       return {
