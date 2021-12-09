@@ -40,7 +40,10 @@ const Question = props => {
 
   const [pageNumber, setPageNumber] = useState(1);
   const [dataQuestion, setDataQuestion] = useState(Questions(questionType));
+  const [questionAnswer, setQuestionAnswer] = useState([]);
   const [selectedAnswer, setSelectedAnswer] = useState('');
+  const [timer, setTimer] = useState(null);
+  const [counter, setCounter] = useState(0);
 
   const flatlistRef = useRef();
 
@@ -75,6 +78,8 @@ const Question = props => {
     if (pageNumber !== dataQuestion.length) {
       const {id: number, isRight} = selectedAnswer;
 
+      setQuestionAnswer(questionAnswer.concat(selectedAnswer));
+
       console.log(number, isRight);
       analyticsEvent(`${analytic}_answer`, {
         numberQuestion: number,
@@ -84,6 +89,12 @@ const Question = props => {
       scrollToIndex(pageNumber - 1 + 1);
       setSelectedAnswer('');
     } else {
+      dataQuestion.map((item, index) => {
+        dataQuestion[index].options.map((_item, _index) => {
+          delete _item?.selected;
+        });
+      });
+      navigation.navigate('Finish');
     }
   };
 
