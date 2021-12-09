@@ -1,5 +1,12 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {View, Text, TouchableOpacity, FlatList, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,
+  Modal,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {analyticsEvent} from '../../utils';
 import {Questions} from '../../constants';
@@ -35,6 +42,8 @@ const ButtonAnswer = ({item, index, onPress}) => {
 const Question = props => {
   const {navigation, route} = props;
 
+  const WINDOW = Dimensions.get('window');
+
   const questionType = route.params?.questionType ?? '';
   const analytic = route.params?.analytic ?? '';
 
@@ -42,10 +51,13 @@ const Question = props => {
   const [dataQuestion, setDataQuestion] = useState(Questions(questionType));
   const [questionAnswer, setQuestionAnswer] = useState([]);
   const [selectedAnswer, setSelectedAnswer] = useState('');
-  const [timer, setTimer] = useState(null);
-  const [counter, setCounter] = useState(0);
+  const [modalFaq, setModalFaq] = useState(false);
 
   const flatlistRef = useRef();
+
+  const widthByScreen = size => {
+    return (size * WINDOW.width) / 100;
+  };
 
   const navigateToHome = () => {
     analyticsEvent('back_to_home', {questionType: questionType});
@@ -55,10 +67,6 @@ const Question = props => {
         delete _item?.selected;
       });
     });
-  };
-
-  const onPressFAQ = () => {
-    analyticsEvent('onPress_FAQ_Question');
   };
 
   const scrollToIndex = index => {
@@ -106,6 +114,128 @@ const Question = props => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#FFF'}}>
+      <Modal visible={modalFaq} transparent>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 22,
+          }}>
+          <View
+            style={{
+              backgroundColor: 'white',
+              width: widthByScreen(90),
+              borderRadius: 12,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 4,
+              elevation: 5,
+              padding: 16,
+            }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: 'black',
+                marginBottom: 16,
+                marginHorizontal: 16,
+                fontFamily: 'ReadexPro-Regular',
+              }}>
+              FAQ
+            </Text>
+            <View
+              style={{
+                borderBottomColor: 'black',
+                borderBottomWidth: 1,
+                marginHorizontal: 16,
+                marginBottom: 16,
+              }}
+            />
+
+            <View
+              style={{
+                borderWidth: 1,
+                borderColor: 'black',
+                borderRadius: 8,
+                marginHorizontal: 16,
+                padding: 16,
+              }}>
+              <View style={{marginBottom: 16}}>
+                <Text style={{color: 'black', fontFamily: 'ReadexPro-Regular'}}>
+                  Q : Kalo benar nilainya berapa ?
+                </Text>
+                <Text style={{color: 'black', fontFamily: 'ReadexPro-Regular'}}>
+                  A : 10
+                </Text>
+              </View>
+
+              <View style={{marginBottom: 16}}>
+                <Text style={{color: 'black', fontFamily: 'ReadexPro-Regular'}}>
+                  Q : Kalo udah ke beranda bisa ngelanjutin lagi ?
+                </Text>
+                <Text style={{color: 'black', fontFamily: 'ReadexPro-Regular'}}>
+                  A : Gak Bisa
+                </Text>
+              </View>
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: 16,
+                marginHorizontal: 16,
+              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalFaq(false);
+                  analyticsEvent('faq_answer', {isHelp: 'false'});
+                }}
+                style={{
+                  backgroundColor: '#ededed',
+                  width: '47%',
+                  paddingVertical: 8,
+                  borderRadius: 8,
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: 'black',
+                    fontFamily: 'ReadexPro-Regular',
+                  }}>
+                  {'Tidak Membantu'}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  setModalFaq(false);
+                  analyticsEvent('faq_answer', {isHelp: 'true'});
+                }}
+                style={{
+                  backgroundColor: '#96E9B8',
+                  width: '47%',
+                  paddingVertical: 8,
+                  borderRadius: 8,
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: 'black',
+                    fontFamily: 'ReadexPro-Regular',
+                  }}>
+                  Membantu
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
       <View
         style={{
           flexDirection: 'row',
@@ -129,7 +259,11 @@ const Question = props => {
           }}>
           {questionType}
         </Text>
-        <TouchableOpacity onPress={onPressFAQ}>
+        <TouchableOpacity
+          onPress={() => {
+            setModalFaq(true);
+            analyticsEvent('go_to_faq', {});
+          }}>
           <Icon
             style={{marginHorizontal: 16, marginVertical: 8}}
             name="help-circle-outline"
