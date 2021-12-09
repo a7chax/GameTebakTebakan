@@ -70,13 +70,16 @@ const Home = props => {
     analyticsScreen('Profile');
   };
 
-  const navigateToQuestion = (questionType = '') => {
-    navigation.navigate('Question', {questionType: questionType});
+  const navigateToQuestion = (questionType = '', analytic = '') => {
+    navigation.navigate('Question', {
+      questionType: questionType,
+      analytic: analytic,
+    });
+    analyticsEvent('go_to_question', {questionType: analytic});
     analyticsScreen('Question');
-    analyticsEvent('go_to_question', {typeQuestion: questionType});
   };
 
-  const Item = ({title, totalQuestion}) => (
+  const Item = ({title, totalQuestion, analytic}) => (
     <TouchableOpacity
       style={{
         backgroundColor: COLORS[Math.floor(Math.random() * 10 + 1) - 1],
@@ -84,7 +87,7 @@ const Home = props => {
         marginBottom: 10,
         padding: 16,
       }}
-      onPress={() => navigateToQuestion(title)}>
+      onPress={() => navigateToQuestion(title, analytic)}>
       <Text
         style={{
           color: 'grey',
@@ -106,7 +109,11 @@ const Home = props => {
   );
 
   const renderItem = ({item}) => (
-    <Item title={item.title} totalQuestion={item.totalQuestion} />
+    <Item
+      title={item.title}
+      totalQuestion={item.totalQuestion}
+      analytic={item.analytic}
+    />
   );
 
   useEffect(() => {

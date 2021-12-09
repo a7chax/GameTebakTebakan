@@ -1,12 +1,5 @@
-import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  Dimensions,
-  TouchableOpacityBase,
-} from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
+import {View, Text, TouchableOpacity, FlatList, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {analyticsEvent} from '../../utils';
 import {Questions} from '../../constants';
@@ -43,18 +36,30 @@ const Question = props => {
   const {navigation, route} = props;
 
   const questionType = route.params?.questionType ?? '';
+  const analytic = route.params?.analytic ?? '';
 
   const [pageNumber, setPageNumber] = useState(1);
   const [dataQuestion, setDataQuestion] = useState(Questions(questionType));
   const [selectedAnswer, setSelectedAnswer] = useState('');
 
+  const flatlistRef = useRef();
+
   const navigateToHome = () => {
     analyticsEvent('back_to_home', {questionType: questionType});
     navigation.goBack();
+    dataQuestion.map((item, index) => {
+      dataQuestion[index].options.map((_item, _index) => {
+        delete _item?.selected;
+      });
+    });
   };
 
   const onPressFAQ = () => {
     analyticsEvent('onPress_FAQ_Question');
+  };
+
+  const scrollToIndex = index => {
+    flatlistRef?.current?.scrollToIndex({animated: true, index: index});
   };
 
   const onScrollEnd = e => {
@@ -62,15 +67,24 @@ const Question = props => {
       Math.max(Math.floor(e.nativeEvent.contentOffset.x / width + 0.7) + 1, 0),
       dataQuestion.length,
     );
+
     setPageNumber(pageNumberTemp);
   };
 
-  const nextQuestion = item => {
-    const {id: number, isRight} = item;
-    analyticsEvent(`${questionType.toLowerCase()}_answer`, {
-      number: number,
-      isRight: isRight,
-    });
+  const nextQuestion = () => {
+    if (pageNumber !== dataQuestion.length) {
+      const {id: number, isRight} = selectedAnswer;
+
+      console.log(number, isRight);
+      analyticsEvent(`${analytic}_answer`, {
+        numberQuestion: number,
+        isRight: isRight.toString(),
+      });
+
+      scrollToIndex(pageNumber - 1 + 1);
+      setSelectedAnswer('');
+    } else {
+    }
   };
 
   return (
@@ -132,8 +146,10 @@ const Question = props => {
         data={dataQuestion}
         pagingEnabled
         horizontal
+        ref={flatlistRef}
+        showsHorizontalScrollIndicator={false}
         bounces={false}
-        onMomentumScrollEnd={onScrollEnd}
+        onScroll={onScrollEnd}
         renderItem={({item, index}) => {
           return (
             <View style={{width, padding: 16, paddingTop: 0}}>
@@ -158,6 +174,8 @@ const Question = props => {
                           dataQuestion[index].options.map(
                             (itemLoop, indexLoop) => {
                               if (indexIndex === indexLoop) {
+                                itemLoop.id = dataQuestion[index].id;
+                                setSelectedAnswer(itemLoop);
                                 return (itemLoop.selected = true);
                               } else {
                                 return (itemLoop.selected = false);
@@ -167,24 +185,6 @@ const Question = props => {
                           setDataQuestion([...tempDataQuesttion]);
                         }}
                       />
-                      {/* <TouchableOpacity
-                      style={{
-                        backgroundColor:
-                          i !== 0 ? BASIC_TRANSPARENT_COLOR : BASIC_COLOR,
-                        width: '100%',
-                        padding: 16,
-                        marginBottom: 12,
-                        borderRadius: 8,
-                      }}>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          color: i !== 0 ? BASIC_BLACK : 'white',
-                          fontWeight: '600',
-                        }}>
-                        {e.option}. {e.valueOption}
-                      </Text>
-                    </TouchableOpacity> */}
                     </>
                   );
                 })}
@@ -193,6 +193,22 @@ const Question = props => {
           );
         }}
       />
+
+      <TouchableOpacity
+        disabled={!selectedAnswer ? true : false}
+        onPress={() => nextQuestion()}
+        style={{
+          backgroundColor: selectedAnswer
+            ? BASIC_COLOR
+            : BASIC_TRANSPARENT_COLOR,
+          margin: 16,
+          padding: 16,
+          borderRadius: 8,
+        }}>
+        <Text style={{textAlign: 'center', fontWeight: '600', color: 'white'}}>
+          {pageNumber === dataQuestion.length ? 'Selesai' : 'Selanjutnya'}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };

@@ -1320,22 +1320,27 @@ const BAHASA = [
 export const QuestionCategory = [
   {
     title: 'Matematika',
+    analytic: 'matematika',
     totalQuestion: 10,
   },
   {
     title: 'Bahasa Inggris',
+    analytic: 'bahasa_inggris',
     totalQuestion: 10,
   },
   {
     title: 'Bahasa Indonesia',
+    analytic: 'bahasa_indonesia',
     totalQuestion: 10,
   },
   {
     title: 'Penjaskes',
+    analytic: 'penjaskes',
     totalQuestion: 10,
   },
   {
     title: 'Seni Budaya',
+    analytic: 'seni_budaya',
     totalQuestion: 10,
   },
 ];
