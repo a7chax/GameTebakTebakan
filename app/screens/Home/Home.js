@@ -118,7 +118,7 @@ const Home = props => {
 
   useEffect(() => {
     analyticsUserProperties({
-      totalScore: '10000',
+      totalScore: totalScore,
     });
   }, []);
   return (
