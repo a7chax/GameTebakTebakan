@@ -32,6 +32,9 @@ local.properties
 
 # node.js
 #
+
+*.apk
+
 node_modules/
 npm-debug.log
 yarn-error.log
