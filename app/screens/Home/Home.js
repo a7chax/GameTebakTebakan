@@ -66,7 +66,7 @@ const Home = props => {
   }, []);
 
   const navigateToProfile = () => {
-    navigation.navigate('Profile');
+    navigation.navigate('Profile', {playerName: playerName});
     analyticsScreen('Profile');
   };
 
@@ -122,7 +122,7 @@ const Home = props => {
     });
   }, []);
   return (
-    <View style={[styles.background, {flex: 1}]}>
+    <ScrollView style={[styles.background, {flex: 1}]}>
       <Text
         style={{
           color: BASIC_COLOR,
@@ -204,13 +204,13 @@ const Home = props => {
         </Text>
       </View>
       <FlatList
-        style={{flex: 1}}
+        style={{marginBottom: 32}}
         data={QuestionCategory}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
       />
       {/* <Button title="Klik Ini" onPress={analytic} /> */}
-    </View>
+    </ScrollView>
   );
 };
 

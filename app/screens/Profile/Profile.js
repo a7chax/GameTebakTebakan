@@ -10,9 +10,11 @@ import {useDispatch} from 'react-redux';
 import {PlayerName} from '../../redux/actions';
 
 const Profile = props => {
-  const {navigation} = props;
+  const {navigation, route} = props;
 
-  const [name, setName] = useState('Random');
+  const playerName = route.params?.playerName ?? '';
+
+  const [name, setName] = useState(playerName);
 
   const dispatch = useDispatch();
 
@@ -59,7 +61,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     borderRadius: 6,
     alignSelf: 'center',
-    borderWidth: 2,
     backgroundColor: 'black',
     width: '100%',
   },
