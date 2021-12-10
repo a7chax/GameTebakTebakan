@@ -12,6 +12,7 @@ const Finish = props => {
 
   const analytic = route.params?.analytic ?? '';
   const score = route.params?.score ?? 0;
+  const questionType = route.params?.questionType ?? '';
 
   const [selectedRating, setSelectedRating] = useState('senang');
 
@@ -41,7 +42,7 @@ const Finish = props => {
             lineHeight: 27,
             marginTop: 16,
           }}>
-          {'Anda Baru Saja Menyelesaikan \n Kuis Matematika'}
+          {`Anda Baru Saja Menyelesaikan \n Kuis ${questionType}`}
         </Text>
 
         <Image

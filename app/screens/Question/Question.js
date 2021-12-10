@@ -108,6 +108,7 @@ const Question = props => {
       navigation.navigate('Finish', {
         score: questionAnswerTemp.length * 10,
         analytic: analytic,
+        questionType: questionType,
       });
     }
   };
