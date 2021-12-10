@@ -26,6 +26,7 @@ import {
   analyticsEvent,
   analyticsScreen,
   analyticsUserProperties,
+  analyticUserId,
 } from '../../utils';
 
 const capitalizedName = uniqueNamesGenerator({
@@ -58,6 +59,8 @@ const Home = props => {
   const {playerName, totalScore} = useSelector(state => state.Game);
 
   useEffect(() => {
+    analyticUserId({playerName: playerName});
+
     if (!playerName) {
       dispatch(PlayerName(capitalizedName));
     }
