@@ -84,7 +84,7 @@ const Finish = props => {
               color: BASIC_BLACK,
             }}>
             Kami senang mendengar anda, bagaimana pengalaman anda ketika
-            mengerjakan soal ini ?
+            menggunakan aplikasi ini ?
           </Text>
           <View style={{flexDirection: 'row', alignSelf: 'center'}}>
             <TouchableOpacity
