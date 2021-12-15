@@ -240,12 +240,12 @@ const MATHEMATIC = [
       {
         option: 'a',
         valueOption: '20%',
-        isRight: true,
+        isRight: false,
       },
       {
         option: 'b',
         valueOption: '50%',
-        isRight: false,
+        isRight: true,
       },
       {
         option: 'c',
